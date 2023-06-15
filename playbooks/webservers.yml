@@ -58,4 +58,12 @@
         version: copy_configs
         clone: yes
 
+    - name: INFO
+      ansible.builtin.debug:
+              msg: |
+                dodaj manualnie linie z pliku konfigi/mod_to_bashrc.txt to .bashrc - spowoduje to dodanie default'owych aliasow z pliku konfigi/aliases.txt do twojego configu
+                sprawdz konfiguracje i nie zapomnij source'owac pliku poprzez source ~/.bashrc
+               
+
+
 ...
