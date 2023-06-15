@@ -5,27 +5,47 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+#Vagrant.configure("2") do |config|
+#  config.vm.box = "debian/buster64"
+#  config.vm.hostname = "ORKUZ"
+#
+#  config.vm.provider :libvirt do |libvirt|
+#    libvirt.driver = "kvm"
+#    libvirt.host = "localhost"
+#
+#    libvirt.forward_port guest: 22, host: 2202, auto_correct: false
+#    libvirt.forward_port guest: 80, host: 8080
+#    libvirt.forward_port guest: 443, host: 8443
+#  end
+#end
+
+
 Vagrant.configure(2) do |config|
  # config.vm.network :forwarded_port, host: 8000, guest: 80
  # config.vm.network :forwarded_port, host: 8443, guest: 443
   config.vm.box = "debian/buster64"
   config.vm.hostname = "ORKUZ"
   config.vm.network "forwarded_port",
-    id: 'ssh', guest: 22, host: 2202, host_ip: "192.168.121.136", auto_correct: false
+    #id: 'ssh', guest: 22, host: 2202, host_ip: "192.168.121.136", auto_correct: false
+    id: 'ssh', guest: 22, host: 2202, host_ip: "127.0.0.1", auto_correct: false
   config.vm.network "forwarded_port",
-    id: 'http', guest: 80, host: 8080, host_ip: "192.168.121.136"
+    #id: 'http', guest: 80, host: 8080, host_ip: "192.168.121.136"
+    id: 'http', guest: 80, host: 8080, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port",
-    id: 'https', guest: 443, host: 8443, host_ip: "192.168.121.136"
+    #id: 'https', guest: 443, host: 8443, host_ip: "192.168.121.136"
+    id: 'https', guest: 443, host: 8443, host_ip: "127.0.0.1"
    if Vagrant.has_plugin?("vagrant-vbguest")
     config.vbguest.auto_update = false
   end
-  config.vm.provider ":libvirt" do |libvirt|
+  config.vm.provider "libvirt" do |libvirt|
     libvirt.driver = "kvm"
-    libvirt.connect_via_ssh = false
+    #libvirt.connect_via_ssh = false
     #libvirt.host = "localhost"
     #virtualbox.name = "orkuz_projekt"
   end
 end
+
+
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.

@@ -1,34 +1,28 @@
 ---
 
-- name: servery nginx
+- name: Configure webserver with nginx
   hosts: webservers
   become: True
   tasks:
-    - name: Sprawdzenie czy nginx zainstalowany
+    - name: Ensure nginx is installed
       package: name=nginx update_cache=yes
 
-    - name: Skopiuj config
+    - name: Copy nginx config file
       copy:
         src: nginx.conf
         dest: /etc/nginx/sites-available/default
 
-    - name: Konfiguracja
+    - name: Enable configuration
       file: >
         dest=/etc/nginx/sites-enabled/default
         src=/etc/nginx/sites-available/default
         state=link
 
-    - name: Kopia index.html
+    - name: Copy index.html
       template: >
         src=index.html.j2
         dest=/usr/share/nginx/html/index.html
 
-  handlers:
-    - name: Restart Nginx
-      service:
-        name: nginx
-        state: restarted
-       
-       
-       
-       
+    - name: Restart nginx
+      service: name=nginx state=restarted
+...
