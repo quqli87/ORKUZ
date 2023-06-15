@@ -60,10 +60,32 @@
 
     - name: INFO
       ansible.builtin.debug:
-              msg: |
+        msg: |
                 dodaj manualnie linie z pliku konfigi/mod_to_bashrc.txt to .bashrc - spowoduje to dodanie default'owych aliasow z pliku konfigi/aliases.txt do twojego configu
-                sprawdz konfiguracje i nie zapomnij source'owac pliku poprzez source ~/.bashrc
+                sprawdz konfiguracje
                
 
 
+- name: aliasy
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: stworz ~/.bashrc-personal jezeli go nie ma
+      ansible.builtin.file:
+        path: ~/.bashrc-personal
+        state: touch
+    
+    - name: skopiuj aliases.txt to ~/.bashrc-personal
+      #ansible.builtin.shell: cp /home/vagrant/konfigi/aliases.txt ~/.bashrc-personal
+      ansible.builtin.shell: cp /home/vagrant/konfigi/aliases.txt /home/vagrant/.bashrc-personal
+         #become: true
+    
+    - name: Source ~/.bashrc-personal
+      ansible.builtin.shell: . ~/.bashrc-personal
+
+    - name: Source ~/.bashrc
+      ansible.builtin.shell: . ~/.bashrc
+      #ansible.builtin.shell: exec bash
+
+      #ansible.builtin.shell: source ~/.bashrc
 ...
