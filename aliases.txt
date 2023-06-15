@@ -1,0 +1,4 @@
+alias sl='ls'
+alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+alias ls='ls --color=auto'
+alias nano='vim'
