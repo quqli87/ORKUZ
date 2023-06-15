@@ -1,33 +1,61 @@
 ---
 
-- name: Configure webserver with nginx
+- name: konfiguracja webserver'a ORKUZ nginx
   hosts: webservers
   become: True
   tasks:
-    - name: Ensure nginx is installed
-      package: name=nginx update_cache=yes
+    - name: spr nginx
+      package: 
+        name: nginx 
+        update_cache: yes
         ### apt-get update
 
-    - name: Copy nginx config file
+    - name: kopia configu
       copy:
         src: nginx.conf
         dest: /etc/nginx/sites-available/default
 
-    - name: Enable configuration
-      file: >
-        dest=/etc/nginx/sites-enabled/default
-        src=/etc/nginx/sites-available/default
-        state=link
+    - name: konfiguracja
+      file:
+        dest: /etc/nginx/sites-enabled/default
+        src: /etc/nginx/sites-available/default
+        state: link
 
-    - name: Copy index.html
-      template: >
-        src=index.html.j2
-        dest=/usr/share/nginx/html/index.html
+    - name: kopia pliku index.html
+      template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html
 
     - name: Start nginx
-      service: name=nginx state=started
+      service: 
+        name: nginx 
+        state: restarted
+        #
         #
         #- name: Restart nginx
         #  service: name=nginx state=restarted
-        
+
+- name: Git
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: spr czy git zainstalowany
+      ansible.builtin.stat:
+        path: /usr/bin/git
+      register: git_installed
+    
+    - name: zainstaluj Git
+      ansible.builtin.package:
+        name: git
+        state: present
+      when: git_installed.stat.exists == false
+
+
+    - name: Clone Git repository
+      git:
+        repo: https://github.com/quqli87/ORKUZ
+        dest: /home/vagrant/konfigi
+        version: copy_configs
+        clone: yes
+
 ...
