@@ -8,7 +8,6 @@
       package: 
         name: nginx 
         update_cache: yes
-        ### apt-get update
 
     - name: kopia configu
       copy:
@@ -30,10 +29,6 @@
       service: 
         name: nginx 
         state: restarted
-        #
-        #
-        #- name: Restart nginx
-        #  service: name=nginx state=restarted
 
 - name: Git
   hosts: webservers
@@ -64,8 +59,6 @@
                 dodaj manualnie linie z pliku konfigi/mod_to_bashrc.txt to .bashrc - spowoduje to dodanie default'owych aliasow z pliku konfigi/aliases.txt do twojego configu
                 sprawdz konfiguracje
                
-
-
 - name: aliasy
   hosts: webservers
   become: yes
@@ -76,16 +69,11 @@
         state: touch
     
     - name: skopiuj aliases.txt to ~/.bashrc-personal
-      #ansible.builtin.shell: cp /home/vagrant/konfigi/aliases.txt ~/.bashrc-personal
       ansible.builtin.shell: cp /home/vagrant/konfigi/aliases.txt /home/vagrant/.bashrc-personal
-         #become: true
     
     - name: Source ~/.bashrc-personal
       ansible.builtin.shell: . ~/.bashrc-personal
 
     - name: Source ~/.bashrc
       ansible.builtin.shell: . ~/.bashrc
-      #ansible.builtin.shell: exec bash
-
-      #ansible.builtin.shell: source ~/.bashrc
 ...

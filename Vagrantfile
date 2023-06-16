@@ -39,9 +39,6 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provider "libvirt" do |libvirt|
     libvirt.driver = "kvm"
-    #libvirt.connect_via_ssh = false
-    #libvirt.host = "localhost"
-    #virtualbox.name = "orkuz_projekt"
   end
 end
 

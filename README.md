@@ -1,7 +1,9 @@
-co chcemy:
-server - debian/ubuntu - w sumie bez roznic
-* nginx 
-* strrona w html w repo - w sumie co na niej bedzie to nie istone, aby dzialo; najlepiej zeby w obu wersjach bylo to samo
-* moze TLS/SSL
-* 2 maszyny skonfigurowac, na jednej strona; na drugiej jakas baza postgres moze
+server - debian build using vagrant - look Vagrantfile
+
+Ansible config include:
+* nginx installation
+* nginx configuration
+* html site - test only
+* pull config from branch copy_config and use it to source additional aliases
+
 
