@@ -4,6 +4,7 @@ Ansible config include:
 * nginx installation
 * nginx configuration
 * html site - test only
+* git installation
 * pull config from branch copy_config and use it to source additional aliases
 
 
